@@ -32,7 +32,18 @@ audio_file = st.file_uploader(
     disabled=not consent
 )
 
-if audio_file is not None and consent:
+if audio_file is not None and consent: 
+
+    import hashlib
+
+    identifiant_audio = hashlib.sha256(
+        audio_file.getvalue()
+        ).hexdigest()
+
+if st.session_state.get("audio_actuel") != identifiant_audio:
+    st.session_state["audio_actuel"] = identifiant_audio
+    st.session_state.pop("transcription", None)
+
     st.success("Audio importé avec succès !")
     st.audio(audio_file)
 
@@ -78,6 +89,9 @@ if audio_file is not None and consent:
     autorisation_partage = st.checkbox(
         "J'autorise le partage public de cet enregistrement."
     )
+
+    if not autorisation_ia:
+        st.session_state.pop("transcription", None)
 
     st.caption(
         "L'autorisation de transcription ne signifie pas "
@@ -145,7 +159,7 @@ if audio_file is not None and consent:
             except Exception as erreur:
                 st.error(f"Erreur : {erreur}")
 
-    if "transcription" in st.session_state:
+        if autorisation_ia and "transcription" in st.session_state:
         texte_corrige = st.text_area(
             "Corrigez la transcription si nécessaire :",
             value=st.session_state["transcription"],
