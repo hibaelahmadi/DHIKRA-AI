@@ -31,13 +31,12 @@ Comment utiliser une intelligence artificielle éthique pour préserver et rendr
 ## 3. Notre solution
 
 DHIKRA AI propose un processus de traitement des archives audiovisuelles :
-
-1. Importation d'un fichier audio autorisé.
-2. Transcription automatique à l'aide de l'intelligence artificielle.
-3. Correction et validation humaine de la transcription.
-4. Préparation de traductions et de sous-titres pour améliorer l'accessibilité.
-5. Calcul d'une empreinte numérique pour contrôler l'intégrité du fichier.
-6. Gestion progressive des informations de provenance et d'autorisation.
+1. Importation de l'enregistrement.
+2. Remplissage de la fiche de provenance culturelle et déclaration des droits.
+3. Calcul de l'empreinte SHA-256.
+4. Transcription automatique avec Whisper.
+5. Correction et validation humaine.
+6. Téléchargement des résultats.
 
 Notre approche repose sur un principe essentiel : **l'intelligence artificielle assiste les humains, mais ne remplace pas leur expertise culturelle.**
 
