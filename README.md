@@ -86,9 +86,7 @@ Le projet privilégiera des modèles préentraînés, des traitements proportion
 
 ## 7. Sécurité et intégrité
 
-DHIKRA AI prévoit d'utiliser l'algorithme SHA-256 pour calculer l'empreinte numérique d'un fichier.
-
-Cette empreinte permet de détecter une modification du fichier en comparant deux valeurs calculées à différents moments.
+DHIKRA AI utilise l'algorithme SHA-256 pour calculer l'empreinte numérique des fichiers audio importés. Cette empreinte permet de vérifier ultérieurement si le contenu d'un fichier a été modifié, en comparant les empreintes calculées.
 
 **Limite importante :** SHA-256 ne prouve pas qu'un enregistrement est historiquement authentique ou qu'il a été obtenu avec consentement.
 
@@ -118,11 +116,55 @@ Notre ambition est de commencer par les récits oraux marocains, notamment en da
 
 Les évolutions envisagées comprennent la traduction assistée, les sous-titres synchronisés, la recherche dans les archives et l'enrichissement des métadonnées culturelles.
 
+
 ## 11. Installation et exécution
 
-Les instructions d'installation seront complétées après la mise en place du premier prototype.
+### Prérequis
+- Python 3.12
+- Git
+- FFmpeg
 
-Technologies prévues : Python et Streamlit.
+### Installation
+
+Cloner le dépôt :
+
+```bash
+git clone https://github.com/hibaelahmadi/DHIKRA-AI.git
+cd DHIKRA-AI
+```
+
+Créer un environnement virtuel :
+
+```bash
+python -m venv .venv312
+```
+
+Activer l'environnement sous Windows PowerShell :
+
+```powershell
+.\.venv312\Scripts\Activate.ps1
+```
+
+Installer les dépendances :
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+### Lancer l'application
+
+```bash
+python -m streamlit run app.py
+```
+
+Ouvrir l'adresse locale indiquée dans le terminal.
+
+### Remarques
+
+- Le modèle Whisper peut être téléchargé lors de sa première utilisation.
+- La transcription peut prendre du temps selon la durée de l'audio et les performances de l'ordinateur.
+- Les transcriptions automatiques doivent être vérifiées par une personne compétente, notamment pour la darija.
+- Les utilisateurs doivent disposer des autorisations nécessaires pour traiter les enregistrements.
 
 ## 12. Équipe
 
