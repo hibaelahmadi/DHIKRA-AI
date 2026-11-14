@@ -126,6 +126,6 @@ Technologies prévues : Python et Streamlit.
 
 ## 12. Équipe
 
-Projet réalisé par une équipe de deux développeuses ou développeurs dans le cadre du Hackathon IA Éthique 360°.
+Projet réalisé par une équipe de quatre développeuses ou développeurs dans le cadre du Hackathon IA Éthique 360°.
 
 **DHIKRA AI — Chaque voix est une mémoire. Chaque mémoire mérite de vivre.**
