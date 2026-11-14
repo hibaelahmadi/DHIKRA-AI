@@ -51,18 +51,37 @@ Notre approche repose sur un principe essentiel : **l'intelligence artificielle 
 | GitHub | Collaboration et gestion du code |
 | FFmpeg | Traitement des fichiers audio, si nécessaire |
 
+
 ## 5. Fonctionnalités du prototype
 
-Les fonctionnalités prévues pour le premier prototype sont :
+### Fonctionnalités développées
 
-- Importer un fichier audio.
-- Écouter l'enregistrement importé.
-- Générer une transcription automatique.
-- Corriger manuellement la transcription.
-- Calculer l'empreinte SHA-256 du fichier.
-- Demander la confirmation des droits d'utilisation.
+- Importation de fichiers audio (MP3, WAV, M4A, OGG, FLAC).
+- Écoute des enregistrements dans l'application.
+- Création d'une fiche de provenance culturelle.
+- Déclaration des droits et autorisations de traitement par IA.
+- Séparation de l'autorisation de transcription et de publication.
+- Calcul de l'empreinte numérique SHA-256.
+- Transcription automatique avec Whisper.
+- Correction manuelle des transcriptions.
+- Téléchargement des transcriptions et de la fiche de provenance au format JSON.
 
-**État du projet :** prototype en cours de développement. Les fonctionnalités mentionnées ci-dessus sont des objectifs techniques et ne sont pas toutes encore implémentées.
+### Fonctionnalités envisagées
+
+- Traduction des récits en français et dans d'autres langues.
+- Génération de sous-titres synchronisés.
+- Recherche intelligente dans les archives.
+- Enrichissement des métadonnées culturelles.
+- Amélioration de la reconnaissance de la darija.
+
+### Limites actuelles
+
+Le prototype utilise un modèle Whisper préentraîné.
+La qualité de transcription dépend de la langue, de la qualité
+sonore et des caractéristiques de l'enregistrement.
+
+Une validation humaine reste nécessaire pour préserver
+la fidélité linguistique et culturelle des récits.
 
 ## 6. Notre approche éthique à 360°
 
