@@ -26,7 +26,7 @@ consent = st.checkbox(
 
 audio_file = st.file_uploader(
     "Choisissez un fichier audio",
-    type=["mp3", "wav", "m4a"],
+    type=["mp3", "wav", "m4a" , "ogg", "flac"],
     disabled=not consent
 )
 
