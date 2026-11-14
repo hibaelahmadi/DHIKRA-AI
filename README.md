@@ -41,7 +41,7 @@ DHIKRA AI propose un processus de traitement des archives audiovisuelles :
 
 Notre approche repose sur un principe essentiel : **l'intelligence artificielle assiste les humains, mais ne remplace pas leur expertise culturelle.**
 
-## 4. Technologies envisagées
+## 4. Technologies utilisées
 
 | Technologie | Utilisation |
 |---|---|
