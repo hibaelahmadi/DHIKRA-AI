@@ -1,6 +1,7 @@
 
 import streamlit as st
 from transcription import transcrire_audio
+from security import calculer_sha256
 
 st.set_page_config(
     page_title="DHIKRA AI",
@@ -33,6 +34,12 @@ audio_file = st.file_uploader(
 if audio_file is not None and consent:
     st.success("Audio importé avec succès !")
     st.audio(audio_file)
+    st.subheader("🔐 Intégrité de l'enregistrement")
+
+    empreinte = calculer_sha256(audio_file)
+
+    st.write("Empreinte numérique SHA-256 :")
+    st.code(empreinte)
 
     st.subheader("🧠 Transcription par IA")
 
