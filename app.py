@@ -2,6 +2,7 @@
 import streamlit as st
 from transcription import transcrire_audio
 from security import calculer_sha256
+import json
 
 st.set_page_config(
     page_title="DHIKRA AI",
@@ -34,9 +35,63 @@ audio_file = st.file_uploader(
 if audio_file is not None and consent:
     st.success("Audio importé avec succès !")
     st.audio(audio_file)
+
+    st.subheader("📜 Fiche de provenance culturelle")
+
+    titre = st.text_input("Titre de l'enregistrement")
+
+    region = st.text_input(
+        "Région ou lieu d'origine",
+        placeholder="Ex. : Marrakech, Maroc"
+    )
+
+    langue = st.selectbox(
+        "Langue de l'enregistrement",
+        ["Darija", "Amazigh", "Arabe", "Français", "Autre"]
+    )
+
+    contexte = st.text_area(
+        "Contexte culturel ou historique"
+    )
+
+    source = st.text_input(
+        "Source ou détenteur de l'enregistrement"
+    )
+
+    st.caption(
+        "Ces informations sont déclarées par la personne "
+        "qui importe l'enregistrement et doivent être vérifiées."
+    )
+
     st.subheader("🔐 Intégrité de l'enregistrement")
 
     empreinte = calculer_sha256(audio_file)
+
+
+    fiche_provenance = {
+        "titre": titre,
+        "region_origine": region,
+        "langue": langue,
+        "contexte_culturel": contexte,
+        "source": source,
+        "nom_fichier_audio": audio_file.name,
+        "empreinte_sha256": empreinte,
+        "droits_declares": consent
+    }
+
+    fiche_json = json.dumps(
+        fiche_provenance,
+        ensure_ascii=False,
+        indent=4
+    )
+
+    st.download_button(
+        label="📥 Télécharger la fiche de provenance",
+        data=fiche_json,
+        file_name="fiche_provenance_dhikra.json",
+        mime="application/json"
+    )
+
 
     st.write("Empreinte numérique SHA-256 :")
     st.code(empreinte)
