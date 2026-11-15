@@ -1,4 +1,5 @@
 
+from archive_manager import sauvegarder_recit
 import streamlit as st
 from transcription import transcrire_audio, traduire_texte_francais
 from security import calculer_sha256
@@ -165,7 +166,8 @@ if audio_file is not None and consent:
             texte_corrige = st.text_area(
                 "Corrigez la transcription si nécessaire :",
                 value=st.session_state["transcription"],
-                height=200
+                height=200,
+                key="texte_transcription"
             )
 
             st.download_button(
@@ -189,7 +191,8 @@ if audio_file is not None and consent:
         traduction_corrigee = st.text_area(
             "Vérifiez et corrigez la traduction française :",
             value=st.session_state["traduction_francaise"],
-            height=200
+            height=200,
+            key="texte_traduction"
         )
 
         st.download_button(
@@ -198,6 +201,63 @@ if audio_file is not None and consent:
             file_name="traduction_dhikra_fr.txt",
             mime="text/plain"
         )
+
+
+# Sauvegarde privée des récits
+if audio_file is not None:
+    st.subheader("💾 Sauvegarder ce récit")
+
+    titre_archive = st.text_input(
+        "Titre du récit",
+        placeholder="Exemple : Souvenirs de Marrakech"
+    )
+
+    region_archive = st.text_input(
+        "Région d'origine",
+        placeholder="Exemple : Marrakech-Safi"
+    )
+
+    autorisation_conservation = st.checkbox(
+        "J'autorise la conservation privée de cet enregistrement "
+        "et de ses textes sur cet ordinateur.",
+        key="autorisation_conservation"
+    )
+
+    if st.button("💾 Sauvegarder dans ma bibliothèque"):
+        if not autorisation_conservation:
+            st.error("Vous devez autoriser la conservation.")
+        elif not titre_archive.strip():
+            st.error("Veuillez saisir un titre.")
+        elif not autorisation_ia:
+            st.error("Le traitement par IA doit être autorisé.")
+        else:
+            try:
+                transcription_archive = st.session_state.get(
+                    "texte_transcription",
+                    st.session_state.get("transcription", "")
+                )
+
+                traduction_archive = st.session_state.get(
+                    "texte_traduction",
+                    st.session_state.get("traduction_francaise", "")
+                )
+
+                identifiant = sauvegarder_recit(
+                    audio_bytes=audio_file.getvalue(),
+                    nom_fichier=audio_file.name,
+                    transcription=transcription_archive,
+                    traduction=traduction_archive,
+                    titre=titre_archive,
+                    region=region_archive,
+                    autorisation_conservation=autorisation_conservation
+                )
+
+                st.success(
+                    f"Récit sauvegardé avec succès ! ID : {identifiant}"
+                )
+
+            except Exception as erreur:
+                st.error(f"Erreur de sauvegarde : {erreur}")
 
 st.divider()
 

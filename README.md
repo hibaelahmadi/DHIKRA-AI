@@ -54,25 +54,39 @@ Notre approche repose sur un principe essentiel : **l'intelligence artificielle 
 
 ## 5. Fonctionnalités du prototype
 
+DHIKRA AI — ذكرى est un prototype d'intelligence artificielle éthique dédié à la préservation et à la valorisation du patrimoine oral et audiovisuel marocain et maghrébin.
+
 ### Fonctionnalités développées
 
-- Importation de fichiers audio (MP3, WAV, M4A, OGG, FLAC).
-- Écoute des enregistrements dans l'application.
-- Création d'une fiche de provenance culturelle.
-- Déclaration des droits et autorisations de traitement par IA.
-- Séparation de l'autorisation de transcription et de publication.
-- Calcul de l'empreinte numérique SHA-256.
-- Transcription automatique avec Whisper.
-- Correction manuelle des transcriptions.
-- Téléchargement des transcriptions et de la fiche de provenance au format JSON.
+- **Importation audio :** prise en charge des enregistrements aux formats MP3, WAV, M4A, OGG et FLAC.
+- **Transcription automatique :** conversion de la parole en texte arabe à l'aide du modèle Whisper.
+- **Correction humaine :** possibilité de vérifier et de modifier les transcriptions produites par l'IA.
+- **Traduction française :** traduction des transcriptions arabes vers le français, avec possibilité de correction.
+- **Exportation des textes :** téléchargement des transcriptions et des traductions.
+- **Traçabilité :** génération d'une empreinte numérique SHA-256 et d'une fiche de provenance.
+- **Consentement :** distinction entre l'autorisation de traitement par IA, l'autorisation de publication et l'autorisation de conservation.
+- **Archivage local privé :** sauvegarde des enregistrements audio avec leurs métadonnées, leur transcription et leur traduction, sous réserve de vérification des données enregistrées.
 
-### Fonctionnalités envisagées
+### Fonctionnalités prévues
 
-- Traduction des récits en français et dans d'autres langues.
-- Génération de sous-titres synchronisés.
-- Recherche intelligente dans les archives.
-- Enrichissement des métadonnées culturelles.
-- Amélioration de la reconnaissance de la darija.
+Le prototype sera progressivement enrichi avec :
+
+- Une bibliothèque numérique permettant de consulter et de rechercher les récits sauvegardés.
+- Un lecteur audio intégré pour écouter les archives.
+- Un glossaire intelligent des expressions culturelles et des termes en darija.
+- Des sous-titres synchronisés avec les enregistrements.
+- Une carte interactive pour explorer les récits par région.
+- L'exportation de fiches patrimoniales au format PDF.
+- Des mécanismes de validation communautaire et de gestion des demandes de suppression.
+
+### État du projet
+
+DHIKRA AI est actuellement en phase de prototypage. Les principales fonctions de traitement audio et de traduction sont disponibles, tandis que l'archivage et les fonctionnalités de consultation font l'objet d'améliorations.
+
+Le projet privilégie une approche centrée sur l'humain : les résultats de l'IA doivent pouvoir être vérifiés et corrigés, les autorisations doivent être respectées et les contenus ne doivent pas être publiés automatiquement.
+
+L'objectif est de faire évoluer ce prototype vers une plateforme collaborative et responsable de préservation du patrimoine culturel.
+
 
 ### Limites actuelles
 
