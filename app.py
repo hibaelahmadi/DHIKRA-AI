@@ -146,32 +146,68 @@ if audio_file is not None and consent:
             "Vous devez autoriser le traitement par IA "
             "avant de lancer la transcription."
         )
-    if st.button(
-        "Transcrire avec Whisper",
-        disabled=not autorisation_ia
+    
+if st.button(
+    "Transcrire avec Whisper",
+    disabled=not autorisation_ia
+):
+    with st.spinner(
+        "Transcription en cours, veuillez patienter..."
     ):
-        with st.spinner(
-            "Transcription en cours, veuillez patienter..."
-        ):
-            try:
-                texte = transcrire_audio(audio_file)
-                st.session_state["transcription"] = texte
-            except Exception as erreur:
-                st.error(f"Erreur : {erreur}")
+        try:
+            texte = transcrire_audio(audio_file)
+            st.session_state["transcription"] = texte
+        except Exception as erreur:
+            st.error(f"Erreur : {erreur}")
 
-            if autorisation_ia and "transcription" in st.session_state:
-                texte_corrige = st.text_area(
-                    "Corrigez la transcription si nécessaire :",
-                    value=st.session_state["transcription"],
-                    height=200
-                )
+# Afficher la transcription après son traitement
+if autorisation_ia and "transcription" in st.session_state:
 
-                st.download_button(
-                    "📥 Télécharger la transcription",
-                    data=texte_corrige,
-                    file_name="transcription_dhikra.txt",
-                    mime="text/plain"
-              )
+    texte_corrige = st.text_area(
+        "Corrigez la transcription si nécessaire :",
+        value=st.session_state["transcription"],
+        height=200,
+        key="texte_transcription"
+    )
+
+    st.download_button(
+        "📥 Télécharger la transcription",
+        data=texte_corrige,
+        file_name="transcription_dhikra.txt",
+        mime="text/plain"
+    )
+
+    st.subheader("🌍 Traduction en français")
+
+    if st.button("Traduire en français"):
+        try:
+            with st.spinner("Traduction en cours..."):
+                texte_fr = GoogleTranslator(
+                    source="auto",
+                    target="fr"
+                ).translate(texte_corrige)
+
+                st.session_state["traduction_fr"] = texte_fr
+
+        except Exception as erreur:
+            st.error(f"Erreur de traduction : {erreur}")
+
+    if "traduction_fr" in st.session_state:
+        st.text_area(
+            "Résultat de la traduction française :",
+            value=st.session_state["traduction_fr"],
+            height=200,
+            key="texte_fr"
+        )
+
+        st.download_button(
+            "📥 Télécharger la traduction française",
+            data=st.session_state["traduction_fr"],
+            file_name="traduction_francaise.txt",
+            mime="text/plain"
+        )
+
+    
 
 st.divider()
 
