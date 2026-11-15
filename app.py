@@ -1,7 +1,6 @@
 
-from deep_translator import GoogleTranslator
 import streamlit as st
-from transcription import transcrire_audio
+from transcription import transcrire_audio, traduire_texte_francais
 from security import calculer_sha256
 import json
 
@@ -43,6 +42,7 @@ if audio_file is not None and consent:
     if st.session_state.get("audio_actuel") != identifiant_audio:
         st.session_state["audio_actuel"] = identifiant_audio
         st.session_state.pop("transcription", None)
+        st.session_state.pop("traduction_anglaise", None)
 
     st.success("Audio importé avec succès !")
     st.audio(audio_file)
@@ -90,8 +90,10 @@ if audio_file is not None and consent:
         "J'autorise le partage public de cet enregistrement."
     )
 
+    
     if not autorisation_ia:
         st.session_state.pop("transcription", None)
+        st.session_state.pop("traduction_anglaise", None)
 
     st.caption(
         "L'autorisation de transcription ne signifie pas "
@@ -146,68 +148,56 @@ if audio_file is not None and consent:
             "Vous devez autoriser le traitement par IA "
             "avant de lancer la transcription."
         )
-    
-if st.button(
-    "Transcrire avec Whisper",
-    disabled=not autorisation_ia
-):
-    with st.spinner(
-        "Transcription en cours, veuillez patienter..."
+    if st.button(
+        "Transcrire avec Whisper",
+        disabled=not autorisation_ia
     ):
-        try:
-            texte = transcrire_audio(audio_file)
-            st.session_state["transcription"] = texte
-        except Exception as erreur:
-            st.error(f"Erreur : {erreur}")
+        with st.spinner(
+            "Transcription en cours, veuillez patienter..."
+        ):
+            try:
+                texte = transcrire_audio(audio_file)
+                st.session_state["transcription"] = texte
+            except Exception as erreur:
+                st.error(f"Erreur : {erreur}")
 
-# Afficher la transcription après son traitement
-if autorisation_ia and "transcription" in st.session_state:
+    if autorisation_ia and "transcription" in st.session_state:
+            texte_corrige = st.text_area(
+                "Corrigez la transcription si nécessaire :",
+                value=st.session_state["transcription"],
+                height=200
+            )
 
-    texte_corrige = st.text_area(
-        "Corrigez la transcription si nécessaire :",
-        value=st.session_state["transcription"],
-        height=200,
-        key="texte_transcription"
-    )
+            st.download_button(
+                "📥 Télécharger la transcription",
+                data=texte_corrige,
+                file_name="transcription_dhikra.txt",
+                mime="text/plain"
+            )
 
-    st.download_button(
-        "📥 Télécharger la transcription",
-        data=texte_corrige,
-        file_name="transcription_dhikra.txt",
-        mime="text/plain"
-    )
-
-    st.subheader("🌍 Traduction en français")
+    st.subheader("🇫🇷 Traduction française")
 
     if st.button("Traduire en français"):
-        try:
-            with st.spinner("Traduction en cours..."):
-                texte_fr = GoogleTranslator(
-                    source="auto",
-                    target="fr"
-                ).translate(texte_corrige)
+        with st.spinner("Traduction en cours..."):
+            try:
+                traduction = traduire_texte_francais(texte_corrige)
+                st.session_state["traduction_francaise"] = traduction
+            except Exception as erreur:
+                st.error(f"Erreur de traduction : {erreur}")
 
-                st.session_state["traduction_fr"] = texte_fr
-
-        except Exception as erreur:
-            st.error(f"Erreur de traduction : {erreur}")
-
-    if "traduction_fr" in st.session_state:
-        st.text_area(
-            "Résultat de la traduction française :",
-            value=st.session_state["traduction_fr"],
-            height=200,
-            key="texte_fr"
+    if "traduction_francaise" in st.session_state:
+        traduction_corrigee = st.text_area(
+            "Vérifiez et corrigez la traduction française :",
+            value=st.session_state["traduction_francaise"],
+            height=200
         )
 
         st.download_button(
             "📥 Télécharger la traduction française",
-            data=st.session_state["traduction_fr"],
-            file_name="traduction_francaise.txt",
+            data=traduction_corrigee,
+            file_name="traduction_dhikra_fr.txt",
             mime="text/plain"
         )
-
-    
 
 st.divider()
 
