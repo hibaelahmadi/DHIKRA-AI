@@ -1,4 +1,5 @@
 
+from deep_translator import GoogleTranslator
 import streamlit as st
 from transcription import transcrire_audio
 from security import calculer_sha256
