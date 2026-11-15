@@ -32,17 +32,16 @@ audio_file = st.file_uploader(
     disabled=not consent
 )
 
-if audio_file is not None and consent: 
-
+if audio_file is not None and consent:
     import hashlib
 
     identifiant_audio = hashlib.sha256(
         audio_file.getvalue()
-        ).hexdigest()
+    ).hexdigest()
 
-if st.session_state.get("audio_actuel") != identifiant_audio:
-    st.session_state["audio_actuel"] = identifiant_audio
-    st.session_state.pop("transcription", None)
+    if st.session_state.get("audio_actuel") != identifiant_audio:
+        st.session_state["audio_actuel"] = identifiant_audio
+        st.session_state.pop("transcription", None)
 
     st.success("Audio importé avec succès !")
     st.audio(audio_file)
@@ -159,19 +158,19 @@ if st.session_state.get("audio_actuel") != identifiant_audio:
             except Exception as erreur:
                 st.error(f"Erreur : {erreur}")
 
-        if autorisation_ia and "transcription" in st.session_state:
-        texte_corrige = st.text_area(
-            "Corrigez la transcription si nécessaire :",
-            value=st.session_state["transcription"],
-            height=200
-        )
+            if autorisation_ia and "transcription" in st.session_state:
+                texte_corrige = st.text_area(
+                    "Corrigez la transcription si nécessaire :",
+                    value=st.session_state["transcription"],
+                    height=200
+                )
 
-        st.download_button(
-            "📥 Télécharger la transcription",
-            data=texte_corrige,
-            file_name="transcription_dhikra.txt",
-            mime="text/plain"
-        )
+                st.download_button(
+                    "📥 Télécharger la transcription",
+                    data=texte_corrige,
+                    file_name="transcription_dhikra.txt",
+                    mime="text/plain"
+              )
 
 st.divider()
 
